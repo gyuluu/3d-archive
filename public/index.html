@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Archivo:500|Open+Sans:300,700" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>3D Archive</title>
+</head>
+<body>
+    <div id="main">
+        <image-modal v-if="id" :id='id' @close='closeModalOnParent'></image-modal>
+        <h2 class="title">3D ARCHIVE</h2>
+        <form>
+            <input v-model='title' type="text" name="title" placeholder="title" onfocus="this.placeholder = ''" onblur="this.placeholder = 'title'">
+            <input v-model='description' type="text" name="description" placeholder="description" onfocus="this.placeholder = ''" onblur="this.placeholder = 'description'">
+            <input v-model='username' type="text" name="username" placeholder="username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'username'">
+            <input @change='handleChange' type="file" name="file" accept='image/*' id="file-upload">
+            <button @click='handleClick'>Submit</button>
+        </form>
+        <h3 class="latest">Latest Works</h3>
+        <div class="images-container">
+            <div class="card" v-for="image in images" :key="image.url">
+                <a :href="'#' + image.id">
+                    <img :src="image.url" :alt="image.description" class="image">
+                </a>
+                <p class="home-title">{{image.title}}</p>
+            </div>
+        </div>
+        <form>
+            <button v-if="showMore" @click="handleMore">Gimme More</button>
+        </form>
+    </div>
+    <script id="image-modal-template" type="text/x-template">
+        <div class="modal">
+            <p class="backnext" @click="goback" v-if="showPrev"><</p>
+            <div class="modal-popup">
+                <div class='image-data' v-for="img in image">
+                    <img :src="img.url" class="img">
+                </div>
+                <div class="comment-section">
+                    <p @click='closeModal' class="x">x</p>
+                    <div class="description" v-for="img in image">
+                        <h3>{{img.title}}</h3>
+                        <h5>{{img.description}}</h5>
+                        <h5 class="uploaded">uploaded by {{img.username}} on {{img.created_at}}</h5>
+                    </div>
+                    <div class="underline"></div>
+                    <h5>Leave a comment below</h5>
+                    <form>
+                        <input v-model='comment' type="text" name="comment" placeholder="comment" onfocus="this.placeholder = ''" onblur="this.placeholder = 'comment'">
+                        <input v-model='cusername' type="text" name="cusername" placeholder="username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'username'">
+                        <button @click='handleClick'>Submit</button>
+                    </form>
+                    <div class="comments" v-for="comm in comments">
+                        <p>{{comm.comment}} <span class="comment">{{comm.username}} on {{comm.created_at}}</span></p>
+                    </div>
+                </div>
+            </div>
+            <p class="backnext" @click="gonext" v-if="showNext">></p>
+        </div>
+    </script>
+    <script src="/js/vue.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
