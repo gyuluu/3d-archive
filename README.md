@@ -2,7 +2,7 @@
 
 3D Archive is a single page application where users can upload their own 3D artworks, check other people's works and comment on them. Built with Vue.js and AWS / S3.
 
-![3D Archive Preview](https://i.gyazo.com/057c74fe7e270d8de948dccd1a72a681.gif)
+![3D Archive Preview](images/imageboarddd.gif)
 
 ## Tech Stack
 
